@@ -1,4 +1,4 @@
-const textarea = document.querySelector("textarea");
+const categories = document.querySelector("#categories");
 const content = document.querySelector("#content");
 const nbCards = document.querySelector("#nbCards");
 
@@ -19,8 +19,38 @@ function shuffle(arr) {
 
 const zip = (arr) => (arr.length ? arr[0].map((_, i) => arr.map((row) => row[i])) : []);
 
-textarea?.addEventListener("change", () => {
-    const categories = textarea.value.split("\n").map((cat) => cat.split(";"));
+function CSVToArray(strData, strDelimiter) {
+    strDelimiter = strDelimiter || ",";
+    var objPattern = new RegExp(
+        "(\\" +
+            strDelimiter +
+            "|\\r?\\n|\\r|^)" +
+            '(?:"([^"]*(?:""[^"]*)*)"|' +
+            '([^"\\' +
+            strDelimiter +
+            "\\r\\n]*))",
+        "gi"
+    );
+    var arrData = [[]];
+    var arrMatches = null;
+    while ((arrMatches = objPattern.exec(strData))) {
+        var strMatchedDelimiter = arrMatches[1];
+        if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
+            arrData.push([]);
+        }
+        var strMatchedValue;
+        if (arrMatches[2]) {
+            strMatchedValue = arrMatches[2].replace(new RegExp('""', "g"), '"');
+        } else {
+            strMatchedValue = arrMatches[3];
+        }
+        arrData[arrData.length - 1].push(strMatchedValue);
+    }
+    return arrData;
+}
+
+categories.addEventListener("change", async (e) => {
+    const categories = CSVToArray(await e.target.files[0].text());
     content.innerHTML = "";
     const elemsToPick = ROWS * COLS;
     for (let i = 0; i < +nbCards.value; i++) {
