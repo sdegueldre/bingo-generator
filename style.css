@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 2px solid;
+    padding: 0;
+    margin: 0;
+    width: 250px;
+    font-size: 18px;
+    text-align: center;
+    background: white;
+    position: relative;
+    padding: 15px;
+    padding-bottom: 60px;
+}
+
+div {
+    border: 2px solid;
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+    background-color: #3b8cb3;
+    font-size: 18px;
+    font-weight: bold;
+    height: 90%;
+}
+
+@media print {
+    textarea {
+        display: none;
+    }
+    table {
+        max-height: 80vh;
+    }
+}
+
+h2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+h4 {
+    margin-top: 0;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
